@@ -55,3 +55,59 @@ for i in range(10):
     entries.append(entry)
 
 
+# Pilihan jurusan
+tk.Label(
+    frame_kiri,
+    text="Pilihan Jurusan Anda",
+    fg="white",
+    bg="#0d0b24",
+    font=("Arial", 10, "bold")
+).grid(row=10, column=0, pady=15)
+
+jurusan = ttk.Combobox(
+    frame_kiri,
+    values=[
+        "Teknologi Informasi",
+        "Sistem Informasi",
+        "Informatika"
+    ],
+    state="readonly",
+    width=18
+)
+jurusan.grid(row=10, column=1)
+jurusan.set("Teknologi Informasi")
+
+
+# Fungsi prediksi
+def prediksi():
+    try:
+        nilai = [float(entry.get()) for entry in entries]
+
+        if any(n < 0 or n > 100 for n in nilai):
+            messagebox.showerror(
+                "Error",
+                "Nilai harus berada antara 0 sampai 100!"
+            )
+            return
+
+        rata_rata = sum(nilai) / len(nilai)
+
+        if rata_rata >= 75:
+            hasil = "Teknologi Informasi"
+        elif rata_rata >= 65:
+            hasil = "Sistem Informasi"
+        else:
+            hasil = "Informatika"
+
+        hasil_label.config(
+            text=f"Prediksi Prodi:\n{hasil}\n\n"
+                 f"Rata-rata Nilai: {rata_rata:.2f}"
+        )
+
+    except ValueError:
+        messagebox.showerror(
+            "Error",
+            "Masukkan semua nilai terlebih dahulu!"
+        )
+
+
